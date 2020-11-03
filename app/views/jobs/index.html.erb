@@ -1,6 +1,22 @@
+
 <div class="container">
   <div class="card">
     <div class="card-body">
+      <% if @job.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <h4>
+            <%= pluralize(@job.errors.count, "error") %>:
+          </h4>
+          <ul>
+            <% @job.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <button type="button" class="btn btn-primary btn-add-job" data-toggle="modal" data-target="#add-job-modal">
+        Add Job Opportunity
+      </button>
       <h1 class="career-title">Career</h1>
       <p class="career-text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris feugiat tincidunt risus sit amet gravida. Donec ornare bibendum ultrices. Nulla ante nulla, bibendum quis efficitur eu, malesuada sed velit. Vivamus.
@@ -8,26 +24,84 @@
       <hr class="separator">
       <h3 class="open-job-title">Open Job List</h3>
       <br>
-      <table>
-        <thead>
-          <tr>
-            <th>SL</th>
-            <th>Job Title</th>
-            <th>Level</th>
-            <th>Job Nature</th>
-            <th>Close Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>UX Designer</td>
-            <td>Mid level</td>
-            <td>Full time</td>
-            <td>23th Day of May 2020</td>
-          </tr>
-        </tbody>
-      </table>
+      <% if @jobs.blank? %>
+        No job opportunities so far
+      <% else %>
+        <table>
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Job Title</th>
+              <th>Level</th>
+              <th>Job Nature</th>
+              <th>Close Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @jobs.each do |job| %>
+              <tr>
+                <td><%= job.id %> </td>
+                <td><%= job.title %></td>
+                <td><%= job.level %></td>
+                <td><%= job.nature %></td>
+                <td>
+                  <%= job.close_date&.strftime("#{job.close_date.day.ordinalize} Day of %B %Y") || '-' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="add-job-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_with model: @job, local: true do |f| %>
+        <div class="modal-header">
+          <h5 class="modal-title">Add Job Opportunity</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <%= f.label :title, 'Job Title' %>
+                <%= f.text_field :title, class: 'form-control', required: true %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <%= f.label :level %>
+                <%= f.text_field :level, class: 'form-control', required: true %>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <%= f.label :nature, 'Job Nature' %>
+                <%= f.text_field :nature, class: 'form-control', required: true %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <%= f.label :close_date %>
+                <%= f.date_field :close_date, class: 'form-control', required: true %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Submit', class: 'btn btn-success' %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
