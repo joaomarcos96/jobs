@@ -28,6 +28,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
   gem 'webdrivers'
 end
 
