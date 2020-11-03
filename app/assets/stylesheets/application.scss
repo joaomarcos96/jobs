@@ -5,7 +5,17 @@
 //= require bootstrap
 
 @import "font";
+@import "jobs";
 
 body {
   font-family: 'OpenSans';
+}
+table {
+  width: 100%;
+}
+table, th, td {
+  padding: 10px;
+}
+.app-background {
+  background-color: #000036;
 }
