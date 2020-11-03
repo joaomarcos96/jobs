@@ -2,6 +2,11 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
+      <% flash.each do |type, msg| %>
+        <div class="alert alert-success">
+          <%= msg %>
+        </div>
+      <% end %>
       <% if @job.errors.any? %>
         <div class="alert alert-danger" role="alert">
           <h4>
