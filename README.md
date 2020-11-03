@@ -1,24 +1,24 @@
-# README
+# Jobs
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+With Jobs, you can create and list job opportunities.
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+Run the commands below to get the app up and running
 
-* System dependencies
+* Create your own `.env` based on `.env.sample`
 
-* Configuration
+        $ cp .env.sample .env
 
-* Database creation
+* Install the dependencies
 
-* Database initialization
+        $ bundle install
+        $ yarn install
 
-* How to run the test suite
+* Setup the database
 
-* Services (job queues, cache servers, search engines, etc.)
+        $ rake db:setup
 
-* Deployment instructions
+* Run the app
 
-* ...
+        $ rails server
